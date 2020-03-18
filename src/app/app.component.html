@@ -1,0 +1,24 @@
+<gmap-map
+    class="map-container"
+    [latitude]="mapInitInfo.lat"
+    [longitude]="mapInitInfo.lng"
+    [zoom]="mapInitInfo.zoom"
+    (mapClick)="gMapClick($event)"
+    (rightClick)="gMapRightClick($event)"
+	#mapComponent
+>
+  <ng-container *ngIf="mapComponent.gMap">
+    <gmap-marker
+        *ngFor="let marker of markers"
+        [latitude]="marker.lat"
+        [longitude]="marker.lng"
+        [gMap]="mapComponent.gMap"
+    >
+    </gmap-marker>
+
+    <gmap-polygon *ngIf="polygonPaths"
+                  [gMap]="mapComponent.gMap"
+                  [paths]="polygonPaths"
+    ></gmap-polygon>
+  </ng-container>
+</gmap-map>
