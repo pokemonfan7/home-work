@@ -4,7 +4,7 @@
     [longitude]="mapInitInfo.lng"
     [zoom]="mapInitInfo.zoom"
     (mapClick)="gMapClick($event)"
-    (rightClick)="gMapRightClick($event)"
+    (rightClick)="gMapRightClick()"
 	#mapComponent
 >
   <ng-container *ngIf="mapComponent.gMap">
@@ -22,3 +22,22 @@
     ></gmap-polygon>
   </ng-container>
 </gmap-map>
+
+<div class="table-container">
+  <nz-table #basicTable [nzData]="markers">
+    <thead>
+    <tr>
+      <th>NO.</th>
+      <th>经度</th>
+      <th>纬度</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{data.lng}}</td>
+      <td>{{data.lat}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

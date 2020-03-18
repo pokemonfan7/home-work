@@ -28,7 +28,7 @@ export class AppComponent {
     this.cdf.detectChanges();
   }
 
-  gMapRightClick(value) {
+  gMapRightClick() {
     this.markersToPolygon(this.markers);
     this.markers = [];
     this.cdf.detectChanges();
