@@ -71,39 +71,9 @@ export class ApiWrapperService {
     })
   }
 
-  createInfoWindow(option: google.maps.InfoWindowOptions) {
-    return this.ngZone.runOutsideAngular(() => {
-      return new google.maps.InfoWindow(option)
-    })
-  }
-
-  createCircle(option: google.maps.InfoWindowOptions) {
-    return this.ngZone.runOutsideAngular(() => {
-      return new google.maps.Circle(option)
-    })
-  }
-
-  createPolyline(option: google.maps.PolylineOptions) {
-    return this.ngZone.runOutsideAngular(() => {
-      return new google.maps.Polyline(option)
-    })
-  }
-
   createPolygon(option: google.maps.PolygonOptions) {
     return this.ngZone.runOutsideAngular(() => {
       return new google.maps.Polygon(option)
-    })
-  }
-
-  createRectangle(option: google.maps.RectangleOptions) {
-    return this.ngZone.runOutsideAngular(() => {
-      return new google.maps.Rectangle(option)
-    })
-  }
-
-  createLabel(content: HTMLElement): Label {
-    return this.ngZone.runOutsideAngular(() => {
-      return new Label(content)
     })
   }
 }

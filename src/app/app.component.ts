@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-root',
@@ -6,25 +7,28 @@ import { ChangeDetectorRef, Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
+  @ViewChild('mapComponent', {static: true}) mapComponent;
   mapInitInfo = {
     lng: 104.07,
     lat: 30.67,
     zoom: 12,
   };
+  polygonFillColor = '#fafafa';
 
   markers = [];
   polygonPaths;
 
   constructor(
-    private cdf: ChangeDetectorRef
+    private cdf: ChangeDetectorRef,
+    private messageService: NzMessageService,
   ) {
   }
 
-  gMapClick(value) {
-    this.markers.push({
-      lat: value.event.latLng.lat(),
-      lng: value.event.latLng.lng()
-    });
+  gMapClick(target) {
+    this.markers = this.markers.concat([{
+      lat: target.event.latLng.lat(),
+      lng: target.event.latLng.lng()
+    }]);
     this.cdf.detectChanges();
   }
 
@@ -34,8 +38,25 @@ export class AppComponent {
     this.cdf.detectChanges();
   }
 
+  listItemClick(e) {
+    if (e.target.tagName === 'LI') {
+      const index = e.target.id.slice(e.target.id.length - 1);
+      this.mapComponent.setCenter(this.markers[index]);
+    }
+  }
+
+  changePolygonFillColor() {
+    this.polygonFillColor = '#545454';
+  }
+
   markersToPolygon(markers) {
-    let minLat, minLng, maxLat, maxLng;
+    if (markers.length < 3) {
+      return this.messageService.warning('Drawing a polygon requires 3 or more points');
+    }
+    let minLat;
+    let minLng;
+    let maxLat;
+    let maxLng;
     markers.forEach(marker => {
       if (!minLat) {
         minLat = marker.lat;
@@ -62,19 +83,22 @@ export class AppComponent {
       }
     });
 
+    // 包含所有marker的矩形的中心点
     const rectangleCenter = { lat: (maxLat + minLat) / 2, lng: (maxLng + minLng) / 2 };
 
+    // 计算每个marker和中心点的角度
     markers.forEach(marker => {
       marker.angle = this.calcAngle(rectangleCenter, marker);
     });
 
+    // 按角度大小排序，构成polygon的路径
     markers.sort((pre, next) => pre.angle - next.angle);
 
     this.polygonPaths = markers;
   }
 
-  calcAngle(centerPoint, markerPoint) {
-    // 计算两点间的角度
+  // 计算两点间的角度
+  private calcAngle(centerPoint, markerPoint) {
     const centerP = this.latLngToPoint(centerPoint);
     const markerP = this.latLngToPoint(markerPoint);
     const diffX = markerP.x - centerP.x;
@@ -82,7 +106,7 @@ export class AppComponent {
     return 180 * Math.atan2(diffY, diffX) / Math.PI;
   }
 
-  // 将经纬度转换为世界坐标点
+  // 将经纬度转换为世界坐标点，方法来自谷歌地图文档
   private latLngToPoint(latLng) {
     const TILE_SIZE = 256;
     let siny = Math.sin(latLng.lat * Math.PI / 180);

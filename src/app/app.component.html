@@ -19,25 +19,36 @@
     <gmap-polygon *ngIf="polygonPaths"
                   [gMap]="mapComponent.gMap"
                   [paths]="polygonPaths"
+                  [fillColor]="polygonFillColor"
     ></gmap-polygon>
   </ng-container>
 </gmap-map>
 
 <div class="table-container">
-  <nz-table #basicTable [nzData]="markers">
-    <thead>
-    <tr>
-      <th>NO.</th>
-      <th>经度</th>
-      <th>纬度</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of basicTable.data; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{data.lng}}</td>
-      <td>{{data.lat}}</td>
-    </tr>
-    </tbody>
-  </nz-table>
+  <ul (click)="listItemClick($event)">
+    <li [id]="'li-' + i" *ngFor="let marker of markers; let i = index">{{marker.lat + ',' +marker.lng}}</li>
+  </ul>
+<!--  <nz-table #basicTable [nzData]="markers">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>NO.</th>-->
+<!--      <th>经度</th>-->
+<!--      <th>纬度</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr *ngFor="let data of basicTable.data; let i = index" (click)="listItemClick(data)">-->
+<!--      <td>{{i + 1}}</td>-->
+<!--      <td>{{data.lng}}</td>-->
+<!--      <td>{{data.lat}}</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </nz-table>-->
 </div>
+
+<button class="btn"
+        nz-button
+        nzType="primary"
+        (click)="changePolygonFillColor()">
+  change polygon fill color
+</button>
