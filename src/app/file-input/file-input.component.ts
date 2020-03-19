@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
 import * as shapefile from 'shapefile';
 
 @Component({
@@ -9,7 +10,9 @@ import * as shapefile from 'shapefile';
 export class FileInputComponent implements OnInit {
   @Output() geoJsonReady = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private messageService: NzMessageService,
+  ) { }
 
   ngOnInit() {
   }
@@ -21,8 +24,12 @@ export class FileInputComponent implements OnInit {
     fileReader.readAsArrayBuffer(shpFile);
     fileReader.onload = (event) => {
       const result = event.target.result;
-      shapefile.read(result).then(geoJson => {
-        this.geoJsonReady.emit(geoJson)
+      shapefile.read(result)
+      .then(geoJson => {
+        this.geoJsonReady.emit(geoJson);
+      })
+      .catch(() => {
+        this.messageService.error('file read error');
       });
     };
   }

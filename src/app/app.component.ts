@@ -56,7 +56,12 @@ export class AppComponent {
   // }
 
   loadGeoJson(geoJson) {
-    this.mapComponent.gMap.data.addGeoJson(geoJson);
+    try {
+      this.mapComponent.gMap.data.addGeoJson(geoJson);
+      this.messageService.success('add geo json successfully');
+    } catch (e) {
+      this.messageService.error('failed to add geo json');
+    }
   }
 
   markersToPolygon(markers) {
