@@ -10,6 +10,7 @@ import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { FileInputComponent } from './file-input/file-input.component';
 registerLocaleData(zh);
 
 const mapConfig: LazyMapLoaderConfig = {
@@ -18,7 +19,8 @@ const mapConfig: LazyMapLoaderConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FileInputComponent
   ],
   imports: [
     BrowserModule,

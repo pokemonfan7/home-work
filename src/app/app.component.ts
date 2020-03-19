@@ -7,7 +7,7 @@ import { NzMessageService } from 'ng-zorro-antd';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  @ViewChild('mapComponent', {static: true}) mapComponent;
+  @ViewChild('mapComponent', {static: false}) mapComponent;
   mapInitInfo = {
     lng: 104.07,
     lat: 30.67,
@@ -54,6 +54,10 @@ export class AppComponent {
   // trackByIndex(index) {
   //   return index;
   // }
+
+  loadGeoJson(geoJson) {
+    this.mapComponent.gMap.data.addGeoJson(geoJson);
+  }
 
   markersToPolygon(markers) {
     if (markers.length < 3) {

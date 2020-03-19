@@ -25,7 +25,8 @@
 </gmap-map>
 
 <div class="table-container">
-  <ul (click)="listItemClick($event)">
+  <app-file-input (geoJsonReady)="loadGeoJson($event)"></app-file-input>
+  <ul class="ul-list" (click)="listItemClick($event)">
     <li [id]="'li-' + i"
         *ngFor="let marker of markers; let i = index">{{marker.lat + ', ' +marker.lng}}</li>
   </ul>
