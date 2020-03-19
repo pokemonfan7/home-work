@@ -24,11 +24,12 @@ export class AppComponent {
   ) {
   }
 
+  // 地图的事件监听使用ngZone.runOutsideAngular，所以需要手动detectChanges
   gMapClick(target) {
-    this.markers = this.markers.concat([{
+    this.markers.push({
       lat: target.event.latLng.lat(),
       lng: target.event.latLng.lng()
-    }]);
+    });
     this.cdf.detectChanges();
   }
 
@@ -48,6 +49,11 @@ export class AppComponent {
   changePolygonFillColor() {
     this.polygonFillColor = '#545454';
   }
+
+  // 根据观察DOM，发现并不需要ngFor的trackBy
+  // trackByIndex(index) {
+  //   return index;
+  // }
 
   markersToPolygon(markers) {
     if (markers.length < 3) {

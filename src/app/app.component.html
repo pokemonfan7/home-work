@@ -26,24 +26,9 @@
 
 <div class="table-container">
   <ul (click)="listItemClick($event)">
-    <li [id]="'li-' + i" *ngFor="let marker of markers; let i = index">{{marker.lat + ',' +marker.lng}}</li>
+    <li [id]="'li-' + i"
+        *ngFor="let marker of markers; let i = index">{{marker.lat + ', ' +marker.lng}}</li>
   </ul>
-<!--  <nz-table #basicTable [nzData]="markers">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--      <th>NO.</th>-->
-<!--      <th>经度</th>-->
-<!--      <th>纬度</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr *ngFor="let data of basicTable.data; let i = index" (click)="listItemClick(data)">-->
-<!--      <td>{{i + 1}}</td>-->
-<!--      <td>{{data.lng}}</td>-->
-<!--      <td>{{data.lat}}</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </nz-table>-->
 </div>
 
 <button class="btn"
