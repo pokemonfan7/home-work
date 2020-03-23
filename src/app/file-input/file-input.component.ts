@@ -22,7 +22,7 @@ export class FileInputComponent implements OnInit {
     const fileReader = new FileReader();
 
     fileReader.readAsArrayBuffer(shpFile);
-    fileReader.onload = (event) => {
+    fileReader.onload = (event: any) => {
       const result = event.target.result;
       shapefile.read(result)
       .then(geoJson => {

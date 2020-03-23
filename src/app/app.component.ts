@@ -41,7 +41,8 @@ export class AppComponent {
 
   listItemClick(e) {
     if (e.target.tagName === 'LI') {
-      const index = e.target.id.slice(e.target.id.length - 1);
+      const index = e.target.id.slice(3);
+      console.log(index)
       this.mapComponent.setCenter(this.markers[index]);
     }
   }
